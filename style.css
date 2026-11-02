@@ -1,0 +1,1162 @@
+/* ==========================================
+   MODUL 5
+   PROFIL DIRI - FELICIA ANGGUN DEVIKA
+   ========================================== */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #eef3f7;
+    color: #2c3e50;
+    line-height: 1.7;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
+
+/* ==========================================
+   HEADER
+   ========================================== */
+
+header {
+    background-color: #1f4e78;
+    color: white;
+    padding: 35px 7% 25px;
+    position: relative;
+}
+
+.header-content {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.profile-photo {
+    width: 135px;
+    height: 135px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    padding: 5px;
+    background-color: white;
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+
+.profile-text .greeting {
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    color: #b9d8ee;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.profile-text h1 {
+    font-size: 2.3rem;
+    line-height: 1.2;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 1.15rem;
+    font-weight: bold;
+}
+
+.campus {
+    color: #c9dfef;
+}
+
+/* ==========================================
+   NAVIGASI
+   ========================================== */
+
+nav {
+    max-width: 1100px;
+    margin: 28px auto 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 16px;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+}
+
+nav a {
+    display: block;
+    padding: 8px 15px;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ==========================================
+   TOMBOL TEMA
+   ========================================== */
+
+#btn-tema {
+    display: block;
+    margin: 20px auto 0;
+    padding: 8px 17px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+#btn-tema:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+
+/* ==========================================
+   MAIN
+   ========================================== */
+
+main {
+    max-width: 1100px;
+    margin: 35px auto;
+    padding: 0 25px;
+    min-height: 650px;
+}
+
+main > section,
+main > aside {
+    display: none;
+}
+
+main > section.active,
+main > aside.active {
+    display: block;
+}
+
+main > section,
+main > aside {
+    background-color: white;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow:
+        0 5px 20px rgba(31, 78, 120, 0.08);
+}
+
+/* ==========================================
+   JUDUL SECTION
+   ========================================== */
+.section-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.section-label {
+    color: #39739d;
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-bottom: 3px;
+}
+
+.section-heading h2 {
+    color: #1f4e78;
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.section-heading > p:last-child {
+    color: #7a8791;
+    font-size: 0.95rem;
+}
+
+/* ==========================================
+   ABOUT ME
+   ========================================== */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+.about-text {
+    padding-right: 15px;
+}
+
+.about-text h3 {
+    color: #1f4e78;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+}
+
+.about-text p {
+    margin-bottom: 15px;
+    color: #52616b;
+}
+.about-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 13px;
+}
+.info-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background-color: #f5f8fa;
+    border: 1px solid #e2e9ee;
+    border-radius: 10px;
+}
+.info-box > span {
+    font-size: 1.5rem;
+}
+.info-box strong {
+    display: block;
+    color: #1f4e78;
+    font-size: 0.85rem;
+}
+
+.info-box p {
+    color: #687781;
+    font-size: 0.82rem;
+}
+
+/* QUOTE */
+.quote-box {
+    margin-top: 35px;
+    padding: 20px 25px;
+    border-left: 5px solid #39739d;
+    background-color: #f4f8fb;
+    border-radius: 0 10px 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.quote-icon {
+    font-size: 3rem;
+    line-height: 1;
+    color: #39739d;
+}
+
+.quote-box p {
+    font-size: 1.05rem;
+    font-style: italic;
+    color: #52616b;
+}
+
+/* ==========================================
+   PENDIDIKAN
+   ========================================== */
+.timeline {
+    position: relative;
+    max-width: 850px;
+    margin: auto;
+    padding-left: 35px;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background-color: #c7d8e4;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 28px;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -33px;
+    top: 25px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #39739d;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px #39739d;
+}
+.timeline-content {
+    padding: 23px 25px;
+    border: 1px solid #e0e8ee;
+    border-radius: 12px;
+    background-color: #f9fbfc;
+}
+.timeline-year {
+    display: inline-block;
+    padding: 4px 11px;
+    margin-bottom: 9px;
+    background-color: #e4f0f7;
+    color: #28698f;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+.timeline-content h3 {
+    color: #1f4e78;
+    margin-bottom: 5px;
+}
+.education-major {
+    font-weight: bold;
+    color: #39739d;
+    margin-bottom: 8px;
+}
+.timeline-content p:last-child {
+    color: #687781;
+    font-size: 0.92rem;
+}
+/* ==========================================
+   PENGALAMAN
+   ========================================== */
+.experience-intro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    padding: 20px 25px;
+    margin-bottom: 25px;
+    background-color: #f4f8fb;
+    border-radius: 12px;
+    border-left: 5px solid #39739d;
+}
+.experience-intro strong {
+    color: #1f4e78;
+    font-size: 1.05rem;
+}
+.experience-intro p {
+    color: #687781;
+    font-size: 0.9rem;
+    margin-top: 3px;
+}
+.experience-number {
+    text-align: center;
+    flex-shrink: 0;
+    padding-left: 25px;
+    border-left: 1px solid #d6e1e8;
+}
+.experience-number span {
+    display: block;
+    font-size: 2rem;
+    line-height: 1;
+    font-weight: bold;
+    color: #1f4e78;
+}
+.experience-number small {
+    color: #7a8791;
+}
+#daftar-artikel .tombol-like {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #39739d;
+    color: white;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+/* ==========================================
+   EXPERIENCE CARD
+   ========================================== */
+.daftar-pengalaman {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+.daftar-pengalaman article {
+    position: relative;
+    padding: 22px;
+    background-color: #ffffff;
+    border: 1px solid #dce5ec;
+    border-radius: 12px;
+    box-shadow:
+        0 3px 10px rgba(31, 78, 120, 0.06);
+    border-top: 4px solid #39739d;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+/* MODUL 5 - HOVER */
+.artikel-hover {
+    background-color: #eef4fb !important;
+    transform: translateY(-3px);
+    box-shadow:
+        0 8px 20px rgba(31, 78, 120, 0.12) !important;
+}
+.daftar-pengalaman article h3 {
+    color: #1f4e78;
+    font-size: 1rem;
+    margin-bottom: 7px;
+}
+.daftar-pengalaman article p:first-of-type {
+    color: #39739d;
+    font-size: 0.82rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.daftar-pengalaman article p:last-of-type {
+    color: #687781;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+/* ==========================================
+   TOMBOL LIKE & HAPUS
+   ========================================== */
+.tombol-pengalaman {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.daftar-pengalaman article button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+.tombol-like {
+    background-color: #39739d;
+}
+.tombol-like:hover {
+    background-color: #28698f;
+}
+.tombol-hapus {
+    background-color: #e85d5d;
+}
+.tombol-hapus:hover {
+    background-color: #c94b4b;
+}
+/* ==========================================
+   TOMBOL TAMBAH
+   ========================================== */
+#btn-tambah {
+    display: block;
+    margin: 25px auto 0;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 7px;
+    background-color: #1f4e78;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+#btn-tambah:hover {
+    background-color: #28698f;
+}
+
+/* ==========================================
+   FORM PENGALAMAN
+   ========================================== */
+.form-pengalaman {
+    display: none;
+    margin-top: 25px;
+    padding: 25px;
+    background-color: #f6f9fb;
+    border: 1px solid #dce5ec;
+    border-radius: 12px;
+}
+.form-pengalaman h3 {
+    color: #1f4e78;
+    margin-bottom: 15px;
+}
+.form-pengalaman label {
+    display: block;
+    margin: 12px 0 5px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.form-pengalaman input,
+.form-pengalaman textarea,
+#form-komentar input,
+#form-komentar textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccd7df;
+    border-radius: 6px;
+    font-family: Arial;
+    font-size: 0.9rem;
+    outline: none;
+}
+.form-pengalaman input:focus,
+.form-pengalaman textarea:focus,
+#form-komentar input:focus,
+#form-komentar textarea:focus {
+    border-color: #39739d;
+    box-shadow:
+        0 0 0 2px rgba(57, 115, 157, 0.12);
+}
+.form-pengalaman textarea,
+#form-komentar textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+.form-tombol {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+}
+#btn-simpan,
+#btn-batal {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 15px;
+    color: white;
+    cursor: pointer;
+}
+#btn-simpan {
+    background-color: #1f4e78;
+}
+#btn-batal {
+    background-color: #7f8c8d;
+}
+
+/* ==========================================
+   KEAHLIAN
+   ========================================== */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+.skill-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background-color: #f7fafc;
+    border: 1px solid #dfe7ed;
+    border-radius: 11px;
+    min-height: 105px;
+}
+.skill-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e5f0f7;
+    border-radius: 10px;
+    color: #1f4e78;
+    font-weight: bold;
+    font-size: 1.15rem;
+}
+.skill-card h3 {
+    color: #1f4e78;
+    font-size: 0.98rem;
+    margin-bottom: 3px;
+}
+.skill-card p {
+    color: #687781;
+    font-size: 0.85rem;
+}
+
+/* ==========================================
+   KONTAK
+   ========================================== */
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+.contact-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    background-color: #f7fafc;
+    border: 1px solid #dfe7ed;
+    border-radius: 11px;
+}
+.contact-card:hover {
+    background-color: #edf5fa;
+    border-color: #9fc0d5;
+}
+.contact-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: #e5f0f7;
+    color: #1f4e78;
+    font-size: 1.2rem;
+}
+.contact-card small {
+    display: block;
+    color: #7a8791;
+    margin-bottom: 2px;
+}
+.contact-card strong {
+    display: block;
+    color: #1f4e78;
+    font-size: 0.9rem;
+    word-break: break-word;
+}
+.toggle-kontak {
+    display: block;
+    margin: 25px auto 0;
+    padding: 9px 17px;
+    border: 1px solid #1f4e78;
+    border-radius: 6px;
+    background-color: transparent;
+    color: #1f4e78;
+    cursor: pointer;
+}
+.toggle-kontak:hover {
+    background-color: #1f4e78;
+    color: white;
+}
+
+/* ==========================================
+   MODUL 5 - KOMENTAR
+   ========================================== */
+#form-komentar {
+    max-width: 750px;
+    margin: auto;
+}
+#form-komentar label {
+    display: block;
+    margin: 12px 0 5px;
+    color: #2c3e50;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+#form-komentar button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #1f4e78;
+    color: white;
+    cursor: pointer;
+}
+#form-komentar button:hover {
+    background-color: #28698f;
+}
+#pesan-error {
+    min-height: 20px;
+    margin-top: 7px;
+    color: #d9534f;
+    font-size: 0.85rem;
+}
+.komentar-hasil {
+    max-width: 750px;
+    margin: 35px auto 0;
+    padding-top: 25px;
+    border-top: 1px solid #e0e7ec;
+}
+.komentar-hasil h3 {
+    color: #1f4e78;
+    margin-bottom: 15px;
+}
+#daftar-komentar {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#daftar-komentar li {
+    padding: 14px 16px;
+    background-color: #f6f9fb;
+    border-left: 4px solid #39739d;
+    border-radius: 7px;
+    color: #52616b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+.komentar-text {
+    flex: 1;
+}
+.hapus-komentar {
+    border: none;
+    background-color: #e85d5d;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+#btn-hapus-semua {
+    margin-top: 15px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background-color: #7f8c8d;
+    color: white;
+    cursor: pointer;
+}
+
+/* ==========================================
+   FOOTER
+   ========================================== */
+footer {
+    margin-top: 40px;
+    padding: 25px 20px;
+    background-color: #1f4e78;
+    color: white;
+    text-align: center;
+}
+footer p {
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+footer span {
+    color: #c9ddeb;
+    font-size: 0.78rem;
+}
+
+/* ==========================================
+   DARK MODE
+   ========================================== */
+body.dark-mode {
+    background-color: #18232d;
+    color: #e6edf2;
+}
+body.dark-mode main > section,
+body.dark-mode main > aside {
+    background-color: #22313d;
+    color: #e6edf2;
+}
+body.dark-mode .about-text p,
+body.dark-mode .timeline-content p:last-child,
+body.dark-mode .experience-intro p,
+body.dark-mode .daftar-pengalaman article p:last-of-type,
+body.dark-mode .skill-card p,
+body.dark-mode .contact-card small {
+    color: #c1ccd3;
+}
+body.dark-mode .section-heading h2,
+body.dark-mode .experience-number span,
+body.dark-mode .form-pengalaman h3,
+body.dark-mode .about-text strong,
+body.dark-mode .timeline-content h3,
+body.dark-mode .skill-card h3,
+body.dark-mode .contact-card strong,
+body.dark-mode .daftar-pengalaman article h3,
+body.dark-mode .komentar-hasil h3 {
+    color: #a9d1e9;
+}
+body.dark-mode .timeline-content,
+body.dark-mode .experience-intro,
+body.dark-mode .daftar-pengalaman article,
+body.dark-mode .skill-card,
+body.dark-mode .contact-card,
+body.dark-mode .form-pengalaman,
+body.dark-mode .komentar-hasil {
+    background-color: #1c2a35;
+    border-color: #344956;
+}
+body.dark-mode .artikel-hover {
+    background-color: #263e4e !important;
+}
+body.dark-mode .timeline-year {
+    background-color: #294456;
+}
+body.dark-mode .form-pengalaman input,
+body.dark-mode .form-pengalaman textarea,
+body.dark-mode #form-komentar input,
+body.dark-mode #form-komentar textarea {
+    background-color: #182630;
+    color: #e6edf2;
+    border-color: #405564;
+}
+body.dark-mode #form-komentar label {
+    color: #d8e1e7;
+}
+body.dark-mode #daftar-komentar li {
+    background-color: #1c2a35;
+    color: #c8d2d9;
+}
+body.dark-mode .toggle-kontak {
+    color: #a9d1e9;
+    border-color: #a9d1e9;
+}
+body.dark-mode .toggle-kontak:hover {
+    background-color: #a9d1e9;
+    color: #18232d;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+@media (max-width: 800px) {
+    header {
+        padding: 30px 20px 22px;
+    }
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .profile-text h1 {
+        font-size: 1.8rem;
+    }
+    main {
+        margin: 20px auto;
+        padding: 0 15px;
+    }
+    main > section,
+    main > aside {
+        padding: 28px 22px;
+    }
+    .daftar-pengalaman {
+        grid-template-columns: 1fr;
+    }
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+@media (max-width: 500px) {
+    .profile-photo {
+        width: 110px;
+        height: 110px;
+    }
+    .profile-text h1 {
+        font-size: 1.55rem;
+    }
+    nav ul {
+        gap: 3px;
+    }
+    nav a {
+        padding: 7px 9px;
+        font-size: 0.8rem;
+    }
+    main > section,
+    main > aside {
+        padding: 25px 18px;
+    }
+    .section-heading h2 {
+        font-size: 1.65rem;
+    }
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+    .experience-intro {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .experience-number {
+        border-left: none;
+        border-top: 1px solid #d6e1e8;
+        padding-left: 0;
+        padding-top: 12px;
+        width: 100%;
+        text-align: left;
+    }
+    .timeline {
+        padding-left: 27px;
+    }
+    .timeline-dot {
+        left: -25px;
+    }
+    .timeline::before {
+        left: 7px;
+    }
+    #daftar-komentar li {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}
+/* Modal styling */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+  background: #fff;
+  color: #2c3e50;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 350px;
+  margin: 15% auto;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.modal-buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.modal-buttons button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#btn-ya { background-color: #e85d5d; color: white; }
+#btn-tidak { background-color: #7f8c8d; color: white; }
+
+#btn-reset-ya { background-color: #e85d5d; color: white; }
+#btn-reset-tidak { background-color: #7f8c8d; color: white; }
+
+#btn-reset-ya:hover { background-color: #c94b4b; }
+#btn-reset-tidak:hover { background-color: #6c7a7d; }
+
+/* ==========================================
+   PROFESSIONAL CENTERED FOOTER
+   ========================================== */
+footer {
+    margin-top: 60px;
+    padding: 40px 20px;
+    background-color: #17324d;
+    color: #ffffff;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.footer-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+.footer-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 0.3px;
+}
+.footer-meta {
+    font-size: 0.8rem;
+    color: #a0aec0;
+    margin: 0 0 10px 0;
+}
+.footer-action-center {
+    margin-top: 2px;
+}
+.btn-professional-link {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+.btn-professional-link svg {
+    transition: transform 0.3s ease;
+}
+.btn-professional-link:hover {
+    background-color: #e85d5d;
+    border-color: #e85d5d;
+    color: #ffffff;
+    opacity: 1;
+}
+.btn-professional-link:hover svg {
+    transform: rotate(-90deg);
+}
+.btn-professional-link:active {
+    transform: scale(0.97);
+}
+
+/* ==========================================
+   SCROLL TO TOP BUTTON (FLOATING)
+   ========================================== */
+.btn-scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #1f4e78;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    
+    /* Kondisi awal: tersembunyi */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+}
+
+/* Saat kelas 'show' ditambahkan oleh JavaScript */
+.btn-scroll-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.btn-scroll-top:hover {
+    background-color: #15293d;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+.btn-scroll-top:active {
+    transform: translateY(0);
+}
+
+/* ==========================================
+   MODUL 8
+   FETCH API DAN ASYNC/AWAIT
+   ========================================== */
+/* INDIKATOR LOADING */
+.loading {
+    display: none;
+    text-align: center;
+    padding: 20px;
+}
+/* ANIMASI SPINNER */
+.spinner {
+    width: 35px;
+    height: 35px;
+    border: 4px solid #ddd;
+    border-top: 4px solid #1f4e78;
+    border-radius: 50%;
+    animation: putar 1s linear infinite;
+    margin: 0 auto 10px;
+}
+@keyframes putar {
+    to {
+        transform: rotate(360deg);
+    }
+}
+/* DAFTAR ARTIKEL DARI API */
+#daftar-artikel article {
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background-color: #f5f8fc;
+    border: 1px solid #dce5ec;
+    border-left: 4px solid #39739d;
+}
+#daftar-artikel article h3 {
+    color: #1f4e78;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+}
+#daftar-artikel article p {
+    color: #687781;
+    font-size: 0.9rem;
+}
+/* PESAN ERROR */
+#pesan-error-artikel {
+    color: #d9534f;
+    text-align: center;
+    margin-bottom: 15px;
+}
+#daftar-artikel .tombol-hapus {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #e85d5d;
+    color: white;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+#daftar-artikel .tombol-hapus:hover {
+    background-color: #c94b4b;
+}
+/* DARK MODE ARTIKEL */
+body.dark-mode #daftar-artikel article {
+    background-color: #1c2a35;
+    border-color: #344956;
+}
+body.dark-mode #daftar-artikel article h3 {
+    color: #a9d1e9;
+}
+
+body.dark-mode #daftar-artikel article p {
+    color: #c1ccd3;
+}
+.penulis-box {
+    max-width: 400px;
+    margin: 25px auto 0;
+    padding: 15px;
+    text-align: center;
+    background-color: #f7fafc;
+    border: 1px solid #dfe7ed;
+    border-radius: 11px;
+}
+.penulis-box h3 { color: #1f4e78; margin-bottom: 5px; }
+#komentar-api {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+#komentar-api li {
+    padding: 14px 16px;
+    background-color: #f6f9fb;
+    border-left: 4px solid #9fc0d5;
+    border-radius: 7px;
+    color: #52616b;
+    font-size: 0.9rem;
+}
+body.dark-mode .penulis-box,
+body.dark-mode #komentar-api li {
+    background-color: #1c2a35;
+    border-color: #344956;
+    color: #c8d2d9;
+}
+body.dark-mode .penulis-box h3 { color: #a9d1e9; }
