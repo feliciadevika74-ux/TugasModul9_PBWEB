@@ -2,6 +2,7 @@
    PROFIL DIRI - FELICIA ANGGUN DEVIKA
    MODUL 7 (JavaScript, Event Handling, Client-side State)
    MODUL 8 (Fetch API dan async/await)
+   Modul 9 (Konsumsi REST API: POST, PATCH, DELETE)
    ========================================== */
 
 /* ==========================================
@@ -501,32 +502,49 @@ function ambilKomentar() {
             return [];
         }
 
-        return dataJSON.filter(function(k) {
-            return (
-                k !== null &&
-                typeof k === "object" &&
-                typeof k.nama === "string" &&
-                typeof k.pesan === "string"
-            );
-        });
+        return dataJSON
+            .filter(function(k) {
+                return (
+                    k !== null &&
+                    typeof k === "object" &&
+                    typeof k.nama === "string" &&
+                    typeof k.pesan === "string"
+                );
+            })
+            .map(function(k, index) {
+                return {
+                    // uid = penanda unik lokal (id server bisa kembar)
+                    uid: typeof k.uid === "string" ? k.uid : "lama-" + index,
+                    // id = id dari server (null jika komentar lama)
+                    id: Number.isFinite(k.id) ? k.id : null,
+                    nama: k.nama,
+                    pesan: k.pesan
+                };
+            });
     } catch (error) {
         console.error("Gagal memuat komentar:", error);
         return [];
     }
 }
 
-function simpanKomentar(nama, pesan) {
+function simpanSemuaKomentar(daftar) {
+    localStorage.setItem(
+        "komentar",
+        JSON.stringify(daftar)
+    );
+}
+
+function simpanKomentar(nama, pesan, idServer) {
     const komentar = ambilKomentar();
 
     komentar.push({
+        uid: "k" + Date.now() + "-" + Math.floor(Math.random() * 1000),
+        id: Number.isFinite(idServer) ? idServer : null,
         nama: nama,
         pesan: pesan
     });
 
-    localStorage.setItem(
-        "komentar",
-        JSON.stringify(komentar)
-    );
+    simpanSemuaKomentar(komentar);
 }
 
 function muatKomentar() {
@@ -536,21 +554,37 @@ function muatKomentar() {
 
     const komentar = ambilKomentar();
 
-    komentar.forEach(function(k, index) {
+    komentar.forEach(function(k) {
         const item = document.createElement("li");
+        item.dataset.uid = k.uid;
+
+        // id dari server disimpan untuk operasi PATCH dan DELETE
+        if (k.id !== null) {
+            item.dataset.id = k.id;
+        }
 
         const teks = document.createElement("span");
         teks.className = "komentar-text";
         teks.textContent = k.nama + ": " + k.pesan;
 
+        const aksi = document.createElement("div");
+        aksi.className = "aksi-komentar";
+
+        const tombolEdit = document.createElement("button");
+        tombolEdit.className = "edit-komentar";
+        tombolEdit.type = "button";
+        tombolEdit.textContent = "Edit";
+
         const tombolHapusKomentar = document.createElement("button");
         tombolHapusKomentar.className = "hapus-komentar";
         tombolHapusKomentar.type = "button";
         tombolHapusKomentar.textContent = "Hapus";
-        tombolHapusKomentar.dataset.index = index;
+
+        aksi.appendChild(tombolEdit);
+        aksi.appendChild(tombolHapusKomentar);
 
         item.appendChild(teks);
-        item.appendChild(tombolHapusKomentar);
+        item.appendChild(aksi);
 
         daftarKomentar.appendChild(item);
     });
@@ -590,13 +624,211 @@ if (inputNamaKomentar) {
 }
 
 /* ==========================================
-   14. FORM KOMENTAR
+   MODUL 9
+   KONSUMSI REST API (POST, PATCH, DELETE)
+   ========================================== */
+
+const API_URL = "https://jsonplaceholder.typicode.com";
+
+// Simpan dan gunakan ID yang dikembalikan oleh server apa adanya.
+// JSONPlaceholder bersifat simulasi: perubahan POST, PATCH, dan DELETE
+// tidak benar-benar disimpan secara permanen di server.
+
+/* ---------- B.6 Menangani status code ---------- */
+
+function pesanDariStatus(status) {
+    if (status === 404) return "Data tidak ditemukan di server.";
+    if (status === 400) return "Data yang dikirim tidak valid.";
+    if (status >= 500) return "Server sedang bermasalah, coba lagi nanti.";
+    return "Terjadi kesalahan tidak terduga.";
+}
+
+function pesanDariError(error) {
+    if (error && typeof error.status === "number") {
+        return pesanDariStatus(error.status);
+    }
+
+    if (error instanceof TypeError) {
+        return "Tidak dapat terhubung ke server. Periksa koneksi internet.";
+    }
+
+    return "Terjadi kesalahan tidak terduga.";
+}
+
+function periksaResponse(response) {
+    if (!response.ok) {
+        const error = new Error("Status: " + response.status);
+        error.status = response.status;
+        throw error;
+    }
+
+    return response;
+}
+
+/* ---------- B.2 POST: kirim komentar baru ---------- */
+
+async function kirimKomentarKeServer(nama, pesan) {
+    const response = await fetch(API_URL + "/comments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: nama, body: pesan, postId: 1 })
+    });
+
+    periksaResponse(response);
+
+    return await response.json();
+}
+
+/* ---------- B.7 PATCH: perbarui (edit) komentar ---------- */
+
+async function perbaruiKomentarKeServer(id, nama, pesan) {
+    const response = await fetch(
+        API_URL + "/comments/" + encodeURIComponent(id), {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: nama, body: pesan })
+        }
+    );
+
+    periksaResponse(response);
+
+    return await response.json();
+}
+
+/* ---------- B.5 DELETE: hapus komentar ---------- */
+
+async function hapusKomentarDiServer(id) {
+    const response = await fetch(
+        API_URL + "/comments/" + encodeURIComponent(id), {
+            method: "DELETE"
+        }
+    );
+
+    periksaResponse(response);
+}
+
+/* ---------- B.4 PATCH: perbarui like ---------- */
+
+async function perbaruiLikeKeServer(postId, jumlahLike) {
+    try {
+        const response = await fetch(API_URL + "/posts/" + postId, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ likes: jumlahLike })
+        });
+
+        periksaResponse(response);
+
+        console.log("Like berhasil diperbarui di server");
+    } catch (error) {
+        console.error("Gagal memperbarui like:", error);
+
+        if (pesanErrorArtikel) {
+            pesanErrorArtikel.textContent =
+                "Gagal memperbarui like. " + pesanDariError(error);
+        }
+    }
+}
+
+/* ---------- Indikator loading pada tombol ---------- */
+
+function aturTombolSibuk(tombol, sibuk, teksSibuk) {
+    if (!tombol) return;
+
+    if (sibuk) {
+        tombol.dataset.teksAsli = tombol.textContent;
+        tombol.textContent = teksSibuk;
+        tombol.disabled = true;
+    } else {
+        tombol.disabled = false;
+
+        if (tombol.dataset.teksAsli !== undefined) {
+            tombol.textContent = tombol.dataset.teksAsli;
+            delete tombol.dataset.teksAsli;
+        }
+    }
+}
+
+/* ---------- Mode edit komentar ---------- */
+
+let komentarDiedit = null; // uid komentar yang sedang diedit
+
+const tombolKirimKomentar = formKomentar
+    ? formKomentar.querySelector('button[type="submit"]')
+    : null;
+const tombolBatalEdit = document.querySelector("#btn-batal-edit");
+
+function perbaruiTeksTombolKirim() {
+    if (!tombolKirimKomentar) return;
+
+    tombolKirimKomentar.textContent =
+        komentarDiedit === null ? "Kirim Komentar" : "Simpan Perubahan";
+}
+
+function mulaiEditKomentar(uid) {
+    const komentar = ambilKomentar().find(function(k) {
+        return k.uid === uid;
+    });
+
+    if (!komentar || !inputNamaKomentar || !inputPesanKomentar) return;
+
+    komentarDiedit = uid;
+
+    inputNamaKomentar.value = komentar.nama;
+    inputPesanKomentar.value = komentar.pesan;
+
+    if (pesanError) {
+        pesanError.textContent = "";
+    }
+
+    if (tombolBatalEdit) {
+        tombolBatalEdit.hidden = false;
+    }
+
+    perbaruiTeksTombolKirim();
+
+    formKomentar.scrollIntoView({ behavior: "smooth", block: "center" });
+    inputPesanKomentar.focus();
+}
+
+function akhiriModeEdit() {
+    komentarDiedit = null;
+
+    if (formKomentar) {
+        formKomentar.reset();
+    }
+
+    sessionStorage.removeItem("drafKomentar");
+    sessionStorage.removeItem("drafNamaKomentar");
+
+    if (tombolBatalEdit) {
+        tombolBatalEdit.hidden = true;
+    }
+
+    perbaruiTeksTombolKirim();
+}
+
+if (tombolBatalEdit) {
+    tombolBatalEdit.addEventListener("click", function() {
+        if (pesanError) {
+            pesanError.textContent = "";
+        }
+
+        akhiriModeEdit();
+    });
+}
+
+/* ==========================================
+   14. FORM KOMENTAR (POST dan PATCH)
    ========================================== */
 if (formKomentar) {
-    formKomentar.addEventListener("submit", function(event) {
+    formKomentar.addEventListener("submit", async function(event) {
         event.preventDefault();
 
         if (!inputNamaKomentar || !inputPesanKomentar) return;
+
+        // Cegah klik ganda saat permintaan masih berjalan
+        if (tombolKirimKomentar && tombolKirimKomentar.disabled) return;
 
         const nama = inputNamaKomentar.value.trim();
         const pesan = inputPesanKomentar.value.trim();
@@ -618,55 +850,127 @@ if (formKomentar) {
             }
             return;
         }
+
+        const sedangEdit = komentarDiedit !== null;
+
+        // Indikator loading: tombol dinonaktifkan selama pengiriman
+        if (tombolKirimKomentar) {
+            tombolKirimKomentar.disabled = true;
+            tombolKirimKomentar.textContent =
+                sedangEdit ? "Menyimpan..." : "Mengirim...";
+        }
+
         try {
-            simpanKomentar(nama, pesan);
+            if (!sedangEdit) {
+                // POST: komentar baru
+                const hasil = await kirimKomentarKeServer(nama, pesan);
+
+                console.log("Komentar tersimpan di server, id:", hasil.id);
+
+                simpanKomentar(hasil.name || nama, hasil.body || pesan, hasil.id);
+            } else {
+                // PATCH: perbarui komentar yang diedit
+                const komentar = ambilKomentar();
+                const index = komentar.findIndex(function(k) {
+                    return k.uid === komentarDiedit;
+                });
+
+                if (index === -1) {
+                    akhiriModeEdit();
+                    return;
+                }
+
+                if (komentar[index].id !== null) {
+                    await perbaruiKomentarKeServer(
+                        komentar[index].id,
+                        nama,
+                        pesan
+                    );
+                }
+
+                komentar[index].nama = nama;
+                komentar[index].pesan = pesan;
+                simpanSemuaKomentar(komentar);
+            }
+
+            muatKomentar();
+            akhiriModeEdit();
         } catch (error) {
-            console.error("Gagal menyimpan komentar:", error);
+            console.error("Gagal memproses komentar:", error);
 
             if (pesanError) {
                 pesanError.textContent =
-                    "Komentar gagal disimpan. Coba lagi.";
+                    (sedangEdit
+                        ? "Gagal memperbarui komentar. "
+                        : "Gagal mengirim komentar. ") +
+                    pesanDariError(error);
             }
-            return;
+        } finally {
+            if (tombolKirimKomentar) {
+                tombolKirimKomentar.disabled = false;
+                perbaruiTeksTombolKirim();
+            }
         }
-        muatKomentar();
-        formKomentar.reset();
-
-        sessionStorage.removeItem("drafKomentar");
-        sessionStorage.removeItem("drafNamaKomentar");
     });
 }
 
 /* ==========================================
-   15. HAPUS SATU KOMENTAR
+   15. EDIT DAN HAPUS KOMENTAR (event delegation)
    ========================================== */
 if (daftarKomentar) {
-    daftarKomentar.addEventListener("click", function(event) {
+    daftarKomentar.addEventListener("click", async function(event) {
         const target = event.target;
 
-        if (
-            !(target instanceof Element) ||
-            !target.classList.contains("hapus-komentar")
-        ) {
+        if (!(target instanceof Element)) return;
+
+        const tombol = target.closest("button");
+
+        if (!tombol || !daftarKomentar.contains(tombol)) return;
+
+        const li = tombol.closest("li");
+
+        if (!li) return;
+
+        const uid = li.dataset.uid;
+
+        // Edit: isi form dengan komentar yang dipilih
+        if (tombol.classList.contains("edit-komentar")) {
+            mulaiEditKomentar(uid);
             return;
         }
 
-        const index = Number(target.dataset.index);
-        const komentar = ambilKomentar();
+        // DELETE: hapus komentar di server, lalu di tampilan
+        if (tombol.classList.contains("hapus-komentar")) {
+            const idServer = li.dataset.id;
 
-        if (
-            Number.isInteger(index) &&
-            index >= 0 &&
-            index < komentar.length
-        ) {
-            komentar.splice(index, 1);
+            aturTombolSibuk(tombol, true, "Menghapus...");
 
-            localStorage.setItem(
-                "komentar",
-                JSON.stringify(komentar)
-            );
+            try {
+                if (idServer !== undefined) {
+                    await hapusKomentarDiServer(idServer);
+                }
 
-            muatKomentar();
+                const sisa = ambilKomentar().filter(function(k) {
+                    return k.uid !== uid;
+                });
+
+                simpanSemuaKomentar(sisa);
+
+                if (komentarDiedit === uid) {
+                    akhiriModeEdit();
+                }
+
+                muatKomentar();
+            } catch (error) {
+                console.error("Gagal menghapus komentar:", error);
+
+                alert(
+                    "Gagal menghapus komentar dari server. " +
+                    pesanDariError(error)
+                );
+
+                aturTombolSibuk(tombol, false);
+            }
         }
     });
 }
@@ -682,6 +986,10 @@ if (tombolHapusSemua && modalKonfirmasi) {
 if (btnYa && modalKonfirmasi) {
     btnYa.addEventListener("click", function() {
         localStorage.setItem("komentar", JSON.stringify([]));
+
+        if (komentarDiedit !== null) {
+            akhiriModeEdit();
+        }
 
         muatKomentar();
         modalKonfirmasi.style.display = "none";
@@ -714,7 +1022,7 @@ if (btnResetYa && modalReset) {
         localStorage.removeItem("semuaLike");
         localStorage.removeItem("komentar");
         localStorage.removeItem("daftarPengalaman");
-        localStorage.removeItem("statusKontak");
+        // statusKontak sengaja dipertahankan saat Reset Data.
 
         sessionStorage.removeItem("drafKomentar");
         sessionStorage.removeItem("drafNamaKomentar");
@@ -824,6 +1132,7 @@ async function ambilArtikel() {
             tombolLike.textContent = "Like (" + jumlah + ")";
             tombolLike.dataset.like = jumlah;
             tombolLike.dataset.kunci = kunci;
+            tombolLike.dataset.postId = artikel.id;
 
             const tombolHapus = document.createElement("button");
             
@@ -864,6 +1173,7 @@ daftarArtikelAPI.addEventListener("click", function(event) {
         t.dataset.like = baru;
         t.textContent = "Like (" + baru + ")";
         simpanLike(t.dataset.kunci, baru);
+        perbaruiLikeKeServer(t.dataset.postId, baru);
     }
 
     if (t.classList.contains("tombol-hapus")) {

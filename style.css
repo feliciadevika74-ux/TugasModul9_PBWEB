@@ -1160,3 +1160,49 @@ body.dark-mode #komentar-api li {
     color: #c8d2d9;
 }
 body.dark-mode .penulis-box h3 { color: #a9d1e9; }
+
+
+/* ==========================================
+   MODUL 9
+   KONSUMSI REST API (EDIT, HAPUS, LOADING)
+   ========================================== */
+
+.aksi-komentar {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.edit-komentar {
+    border: none;
+    background-color: #39739d;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+.edit-komentar:hover {
+    background-color: #28698f;
+}
+
+.hapus-komentar:hover {
+    background-color: #c94b4b;
+}
+
+.edit-komentar:disabled,
+.hapus-komentar:disabled,
+#form-komentar button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#form-komentar #btn-batal-edit {
+    background-color: #7f8c8d;
+    margin-left: 8px;
+}
+
+#form-komentar #btn-batal-edit:hover {
+    background-color: #6c7a7d;
+}
